@@ -36,6 +36,7 @@ function buildMetadata(sample) {
     var metadata = data.metadata;
     // Filter the data for the object with the desired sample number
     var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
+    // Create a variable that holds the first result in the array.
     var result = resultArray[0];
     // Use d3 to select the panel with id of `#sample-metadata`
     var PANEL = d3.select("#sample-metadata");
@@ -53,12 +54,14 @@ function buildMetadata(sample) {
   });
 }
 
+
 // DELIVERABLE 1 - BAR CHART
 
 // 1. Create the buildCharts function.
 function buildCharts(sample) {
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
+    console.log(data);
     // 3. Create a variable that holds the samples array. 
     var samples = data.samples;
     // 4. Create a variable that filters the samples for the object with the desired sample number.
@@ -67,7 +70,7 @@ function buildCharts(sample) {
     var result = resultArray[0];
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
-    var  ids = result.otu_ids;
+    var ids = result.otu_ids;
     var labels = result.otu_labels.slice(0, 10).reverse();
     var values = result.sample_values.slice(0,10).reverse();
 
@@ -79,7 +82,6 @@ function buildCharts(sample) {
     //  so the otu_ids with the most bacteria are last. 
 
     var yticks = ids.map(sampleObj => "OTU " + sampleObj).slice(0,10).reverse();
-
     console.log(yticks)
 
     // 8. Create the trace for the bar chart. 
@@ -128,13 +130,15 @@ function buildCharts(sample) {
 
     // 1. Create a variable that filters the metadata array for the object with the desired sample number.
     var metadata = data.metadata;
+    consone.log(metadata);
     var gaugeArray = metadata.filter(metaObj => metaObj.id == sample);  
+    console.log(gaugeArray);
 
     // 2. Create a variable that holds the first sample in the metadata array.
         var gaugeResult = gaugeArray[0];
 
     // 3. Create a variable that holds the washing frequency.  
-    var wfreqs = gaugeResult.wfreq;
+    var wfreqs = parseFloat(gaugeResult.wfreq);
     console.log(wfreqs)
 
     // 4. Create the trace for the gauge chart.
